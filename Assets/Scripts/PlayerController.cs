@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 
 	private Rigidbody rb;
 	private int count;
+	public int springTimer;
 
 	// At the start of the game..
 	void Start ()
@@ -34,6 +35,13 @@ public class PlayerController : MonoBehaviour {
 
 	void FixedUpdate ()
 	{
+
+		if (springTimer > 0)
+		{
+			movementY -= 1;
+			springTimer -= 1;
+		}
+
 		// Create a Vector3 variable, and assign X and Z to feature the horizontal and vertical float variables above
 		Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
 
@@ -52,6 +60,15 @@ public class PlayerController : MonoBehaviour {
 
 			// Run the 'SetCountText()' function (see below)
 			SetCountText ();
+		}
+
+		if (other.gameObject.CompareTag("Spring"))
+		{
+			if (springTimer < 1)
+			{
+				movementY = 10;
+				springTimer = 10;
+			}
 		}
 	}
 
